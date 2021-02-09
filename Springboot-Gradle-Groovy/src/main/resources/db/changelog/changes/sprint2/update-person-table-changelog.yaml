@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Ushanandhan
+      changes:
+        - update:
+            columns:
+              - column:
+                  name: address
+                  value: Australia
+            tableName: person
+            where: name='Tom'

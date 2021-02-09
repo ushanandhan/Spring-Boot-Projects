@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Ushanandhan
+      changes:
+        - loadData:
+            tableName: person
+            columns:
+              - column:
+                  name: id
+                  type: NUMERIC
+              - column:
+                  name: name
+                  type: STRING
+              - column:
+                  name: address
+                  type: STRING
+            encoding: UTF-8
+            file: db/data/sprint1/person.csv
+            quotchar: "\""
+            separator: ;
