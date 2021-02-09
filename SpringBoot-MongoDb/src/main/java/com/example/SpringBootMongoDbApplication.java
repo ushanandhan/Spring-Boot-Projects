@@ -23,7 +23,7 @@ public class SpringBootMongoDbApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		MongoClient mongoClient = getClient();
-		MongoDatabase mongoDatabase = mongoClient.getDatabase("test");
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("BookStore");
 		MongoCollection<Document> employeeCollection = mongoDatabase.getCollection("employee");
 
 		Document employee = new Document();
