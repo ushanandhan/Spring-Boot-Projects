@@ -1,0 +1,8 @@
+version: "3"
+services:
+  springboot-gradle-groovy:
+    build: ./
+    image: springboot-gradle-groovy:latest
+    container_name: springboot-gradle-groovy
+    ports:
+      - 6060:6060
