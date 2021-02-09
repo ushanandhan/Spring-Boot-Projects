@@ -16,7 +16,7 @@ public class SpringBootMongoDbApplication implements CommandLineRunner {
 	}
 
 	public MongoClient getClient(){
-		return new MongoClient("localhost",27017);
+		return new MongoClient("mongo-db",27017);
 	}
 
 

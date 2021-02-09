@@ -15,7 +15,7 @@
 	<description>MongoDB with Spring Boot</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencies>
@@ -61,6 +61,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<finalName>SpringBoot-MongoDb</finalName>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
