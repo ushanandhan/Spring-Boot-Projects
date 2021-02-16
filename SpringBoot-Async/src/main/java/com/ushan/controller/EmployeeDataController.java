@@ -1,19 +1,29 @@
 package com.ushan.controller;
 
 import com.ushan.model.*;
+import com.ushan.services.LongProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 public class EmployeeDataController 
 {
 	private static Logger log = LoggerFactory.getLogger(EmployeeDataController.class);
+
+	@Autowired
+	LongProcess longProcess;
 
 	@RequestMapping(value = "/addresses", method = RequestMethod.GET)
 	public EmployeeAddresses getAddresses()
@@ -89,5 +99,36 @@ public class EmployeeDataController
 		employeeNamesList.setEmployeeNameList(employeeList);
 
 		return employeeNamesList;
+	}
+
+	@GetMapping(value = "/longProcess")
+	public List<Integer> getLongValue() throws ExecutionException, InterruptedException {
+		LocalTime startTime = LocalTime.now();
+		CompletableFuture<ArrayList<Integer>> longCompletableFuture1 = CompletableFuture.supplyAsync(() -> {
+			try {
+				return longProcess.longMethod(1,5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		});
+
+		CompletableFuture<ArrayList<Integer>> longCompletableFuture2 = CompletableFuture.supplyAsync(() -> {
+			try {
+				return longProcess.longMethod(6,10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		});
+		CompletableFuture.allOf(longCompletableFuture1,longCompletableFuture2).join();
+		List<Integer> result = longCompletableFuture1.get();
+		result.addAll(longCompletableFuture2.get());
+
+		LocalTime endtime = LocalTime.now();
+		Duration duration = Duration.between(startTime,endtime);
+		System.out.println("Current Thread : "+Thread.currentThread().getName()+" took "+duration.getSeconds());
+
+		return result;
 	}
 }
