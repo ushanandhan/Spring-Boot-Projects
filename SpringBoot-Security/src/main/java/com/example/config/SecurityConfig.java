@@ -1,5 +1,6 @@
 package com.example.config;
 
+import com.example.filter.JWTUsernameAndPasswordAuthFilter;
 import com.example.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,37 +40,52 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+        // Form based Authentication begins here...
+//                .csrf().disable()//Enable this only if requests coming from browser. Requests from any applications we can keep this disabled.
+//                .authorizeRequests()
+//                .antMatchers("/", "index", "/css/**").permitAll()
+//                .antMatchers("/api/**").hasRole(STUDENT.name())
+////                .antMatchers(HttpMethod.DELETE,"/management/api/**").hasAuthority(UserPermission.COURSE_WRITE.getPermission())
+////                .antMatchers(HttpMethod.POST,"/management/api/**").hasAuthority(UserPermission.COURSE_WRITE.getPermission())
+////                .antMatchers(HttpMethod.PUT,"/management/api/**").hasAuthority(UserPermission.COURSE_WRITE.getPermission())
+////                .antMatchers(HttpMethod.GET,"management/api/**").hasAnyRole(ADMIN.name(), ADMIN_TRAINEE.name())
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+////                .httpBasic() // Use this if requests coming as web services
+//                .formLogin()
+//                    .loginPage("/login")
+//                    .permitAll()
+//                    .defaultSuccessUrl("/courses",true)
+//                    .usernameParameter("user")  //This parameter name should be matched with "name" attribute of input text
+//                    .passwordParameter("pass")  //This parameter name should be matched with "name" attribute of input text
+//                .and()
+//                .rememberMe()
+//                    .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // Defaults to 2 Weeks but we set here 3 weeks
+//                    .key("somethingverysecured")
+//                    .rememberMeParameter("remember")    //This parameter name should be matched with "name" attribute of input text
+//                .and()
+//                .logout()
+//                    .logoutUrl("/logout")
+//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout","GET"))
+//                    .clearAuthentication(true)
+//                    .invalidateHttpSession(true)
+//                    .deleteCookies("JSESSIONID","remember-me")
+//                    .logoutSuccessUrl("/login");
+        // Form based Authentication Ends here...
+
+        // JWT based Authentication Begins here...
                 .csrf().disable()//Enable this only if requests coming from browser. Requests from any applications we can keep this disabled.
-                .authorizeRequests()
-                .antMatchers("/", "index", "/css/**").permitAll()
-                .antMatchers("/api/**").hasRole(STUDENT.name())
-//                .antMatchers(HttpMethod.DELETE,"/management/api/**").hasAuthority(UserPermission.COURSE_WRITE.getPermission())
-//                .antMatchers(HttpMethod.POST,"/management/api/**").hasAuthority(UserPermission.COURSE_WRITE.getPermission())
-//                .antMatchers(HttpMethod.PUT,"/management/api/**").hasAuthority(UserPermission.COURSE_WRITE.getPermission())
-//                .antMatchers(HttpMethod.GET,"management/api/**").hasAnyRole(ADMIN.name(), ADMIN_TRAINEE.name())
-                .anyRequest()
-                .authenticated()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .httpBasic() // Use this if requests coming as web services
-                .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                    .defaultSuccessUrl("/courses",true)
-                    .usernameParameter("user")  //This parameter name should be matched with "name" attribute of input text
-                    .passwordParameter("pass")  //This parameter name should be matched with "name" attribute of input text
-                .and()
-                .rememberMe()
-                    .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // Defaults to 2 Weeks but we set here 3 weeks
-                    .key("somethingverysecured")
-                    .rememberMeParameter("remember")    //This parameter name should be matched with "name" attribute of input text
-                .and()
-                .logout()
-                    .logoutUrl("/logout")
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout","GET"))
-                    .clearAuthentication(true)
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID","remember-me")
-                    .logoutSuccessUrl("/login");
+                    .addFilter(new JWTUsernameAndPasswordAuthFilter(authenticationManager()))
+                    .authorizeRequests()
+                    .antMatchers("/", "index", "/css/**").permitAll()
+                    .antMatchers("/api/**").hasRole(STUDENT.name())
+                   .anyRequest()
+                    .authenticated();
+        // JWT based Authentication Ends here...
     }
 
     /*@Override
