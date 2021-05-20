@@ -7,18 +7,15 @@ import com.ushan.repository.CarRepository;
 import com.ushan.repository.ExportProgressRepository;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -35,12 +32,12 @@ public class ExcelService {
 
     @Async("asyncExecutor")
     public void createExcelSheet(String id){
-        saveProgress(id, 10, "Query Execution is in-progress.","Cars.xlsx",false,null);
+        saveProgress(id, 10, "Query Execution is in-progress.","Cars.csv",false,null);
         List<Car> cars = carRepository.findAll();
-        saveProgress(id, 50, "Query Execution is completed.","Cars.xlsx",false,null);
+        saveProgress(id, 50, "Query Execution is completed.","Cars.csv",false,null);
         Workbook workbook = null;
         try {
-            workbook = constructExcel(cars,id,"Cars.xlsx");
+            workbook = constructExcel(cars,id,"Cars.csv");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,7 +72,7 @@ public class ExcelService {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        saveProgress(exportId, 100, "Export sheet is completed.","Cars.xlsx",false,workbook);
+        saveProgress(exportId, 100, "Export sheet is completed.","Cars.csv",false,workbook);
         return workbook;
     }
 

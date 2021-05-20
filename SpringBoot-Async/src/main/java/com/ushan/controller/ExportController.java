@@ -40,7 +40,7 @@ public class ExportController {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
         excelService.deleteExportProgress(exportId);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=Cars.xlsx");
+        headers.add("Content-Disposition", "attachment; filename=Cars.csv");
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(byteArrayInputStream));
     }
 }
