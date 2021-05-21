@@ -20,8 +20,7 @@ import static com.example.enums.UserRole.*;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-//Adding this annotation to make sure @PreAuthorize work in Controller
+@EnableGlobalMethodSecurity(prePostEnabled = true)  //Adding this annotation to make sure @PreAuthorize work in Controller
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
