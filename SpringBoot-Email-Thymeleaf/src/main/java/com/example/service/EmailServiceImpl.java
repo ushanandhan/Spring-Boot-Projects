@@ -29,11 +29,14 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     @Async
-    public void send(String to, String email) {
+    public void send(String to, String mailTemplate, Map<String, Object> templateModel) {
+        Context thymeleafContext = new Context();
+        thymeleafContext.setVariables(templateModel);
+        String htmlBody = springTemplateEngine.process(mailTemplate,thymeleafContext);
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,"utf-8");
-            helper.setText(email,true);
+            helper.setText(htmlBody,true);
             helper.setTo(to);
             helper.setSubject("Testing Mail from Here");
             helper.setFrom("hello@ushan.com");

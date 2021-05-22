@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface EmailService {
 
-    void send(String to,String email);
+    void send(String to,String mailTemplate, Map<String, Object> templateModel);
     void send(InternetAddress[] to, InternetAddress[] cc, String subject, String mailTemplate, Map<String, Object> templateModel);
 }
