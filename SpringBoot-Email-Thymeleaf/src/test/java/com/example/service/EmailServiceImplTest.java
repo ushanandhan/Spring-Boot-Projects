@@ -1,5 +1,7 @@
 package com.example.service;
 
+import com.example.model.Car;
+import com.example.repository.CarRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ class EmailServiceImplTest {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    CarRepository carRepository;
+
     @Test
     void send() {
         Map<String,Object> templateModel = new HashMap<>();
@@ -45,11 +50,33 @@ class EmailServiceImplTest {
                 new InternetAddress("bossuser1@email.com",false),
                 new InternetAddress("bossuser2@email.com",false)
         };
+
         Map<String,Object> templateModel = new HashMap<>();
         templateModel.put("taskTitle","Test Title");
         templateModel.put("taskDescription","Test Description");
         templateModel.put("taskDueDate","30-03-2021");
         templateModel.put("taskStatus","In-Progress");
         emailService.send(toAddresses,ccAddresses,"Testing-Email-Using-Thymeleaf","test-email-1.html",templateModel);
+    }
+
+    @Test
+    void sendMailCarList() throws AddressException {
+        InternetAddress[] toAddresses = {
+                new InternetAddress("user1@email.com",false)
+        };
+
+        InternetAddress[] ccAddresses = {
+                new InternetAddress("bossuser1@email.com",false)
+        };
+
+        List<Car> cars = carRepository.findAll();
+
+        Map<String,Object> templateModel = new HashMap<>();
+        templateModel.put("taskTitle","Test Title");
+        templateModel.put("taskDescription","Test Description");
+        templateModel.put("taskDueDate","30-03-2021");
+        templateModel.put("taskStatus","In-Progress");
+        templateModel.put("cars",cars);
+        emailService.send(toAddresses,ccAddresses,"Testing-Email-Using-Thymeleaf","test-email-3.html",templateModel);
     }
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<div style="font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c">
+    <span style="display:none;font-size:1px;color:#fff;max-height:0"></span>
+</div>
+<div>
+    Dear Madam, Dear Sir,
+    <br/><br/>
+    We are informing you that List of cars below which will be available for you to buy in our next quarter.
+    <br/><br/>
+    This(these) variation(s) will not lead to any updates for the coming quarter.
+    <br/><br/>
+    Please reach us before it gets over.
+    <br/><br/>
+    Best regards
+</div>
+<br/><br/>
+<table>
+    <thead>
+    <tr>
+        <th> Id</th>
+        <th> Name</th>
+        <th> Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${cars.empty}">
+        <td colspan="3"> No Books Available</td>
+    </tr>
+    <tr th:each="car : ${cars}">
+        <td><span th:text="${car.id}"> Id </span></td>
+        <td><span th:text="${car.name}"> Name </span></td>
+        <td><span th:text="${car.type}"> Type </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</div>
+</html>
