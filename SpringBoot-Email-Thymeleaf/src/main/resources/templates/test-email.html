@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link   rel="stylesheet"
+                href="http://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="bg-primary" th:text="${taskTitle}"></h1>
+            <p class="bg-secondary" th:text="${taskDescription}"></p>
+            <hr class="my-4">
+            <p class="bg-warning">This task is due by <span th:text="${taskDueDate}"></span></p>
+            <p class="bg-info">Task Status :  <span th:text="${taskStatus}"></span></p>
+        </div>
+    </body>
+
+</html>
