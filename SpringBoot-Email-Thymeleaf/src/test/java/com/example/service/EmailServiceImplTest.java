@@ -35,7 +35,8 @@ class EmailServiceImplTest {
         Map<String,Object> templateModel = new HashMap<>();
         templateModel.put("username","Ushan");
         templateModel.put("link","www.google.co.in");
-        emailService.send("ushan@email.com","test-email-2.html",templateModel);
+        String fileName = "src\\main\\resources\\static\\test.csv";
+        emailService.send("ushan@email.com","test-email-2.html",templateModel,fileName);
 
     }
 

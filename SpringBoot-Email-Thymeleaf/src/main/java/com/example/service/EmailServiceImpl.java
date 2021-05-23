@@ -3,6 +3,7 @@ package com.example.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -29,17 +30,20 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     @Async
-    public void send(String to, String mailTemplate, Map<String, Object> templateModel) {
+    public void send(String to, String mailTemplate, Map<String, Object> templateModel,String fileToAttach) {
         Context thymeleafContext = new Context();
         thymeleafContext.setVariables(templateModel);
         String htmlBody = springTemplateEngine.process(mailTemplate,thymeleafContext);
+        boolean isAttachmentNeeded=!fileToAttach.isBlank()?true:false;
+        FileSystemResource file = new FileSystemResource(fileToAttach);
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,"utf-8");
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,isAttachmentNeeded,"utf-8");
             helper.setText(htmlBody,true);
             helper.setTo(to);
             helper.setSubject("Testing Mail from Here");
             helper.setFrom("hello@ushan.com");
+            helper.addAttachment("Test_File.csv",file);
             javaMailSender.send(mimeMessage);
         }catch (MessagingException e){
             log.error("Failed to send email",e);
@@ -48,6 +52,7 @@ public class EmailServiceImpl implements EmailService{
     }
 
     @Override
+    @Async
     public void send(InternetAddress[] to, InternetAddress[] cc, String subject, String mailTemplate, Map<String, Object> templateModel) {
         Context thymeleafContext = new Context();
         thymeleafContext.setVariables(templateModel);
