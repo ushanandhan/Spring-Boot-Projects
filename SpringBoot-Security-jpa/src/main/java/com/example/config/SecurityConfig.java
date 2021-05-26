@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .and()
                 .formLogin();
+        http.headers().frameOptions().disable(); //To Enable H2-Console we disabled this security
     }
 
     @Bean

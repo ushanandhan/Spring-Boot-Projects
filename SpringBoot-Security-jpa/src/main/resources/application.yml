@@ -1,14 +1,19 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/car_db
-    username: postgres
-    password: ushan
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.H2Dialect
     show-sql: true
+  h2:
+    console:
+      enabled: true
+      settings:
+        trace: true
