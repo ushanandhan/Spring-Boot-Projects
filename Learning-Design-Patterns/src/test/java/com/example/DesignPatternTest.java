@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.creational.builder.Meal;
+import com.example.creational.builder.MealBuilder;
 import com.example.creational.factory.*;
 import com.example.creational.singleton.SingletonObject;
 import org.junit.jupiter.api.Test;
@@ -36,5 +38,19 @@ public class DesignPatternTest {
         SingletonObject object1 = SingletonObject.getInstance();
         System.out.println(object1);
         assertTrue(object.equals(object1));
+    }
+
+    @Test
+    public void builderPatternTest(){
+        MealBuilder mealBuilder = new MealBuilder();
+        Meal vegMeal = mealBuilder.prepareVegMeal();
+        System.out.println("Veg Meal Details :");
+        vegMeal.showItems();
+        System.out.println("Total cost is : "+vegMeal.getPrice());
+        System.out.println("===========================================");
+        Meal nonVegMeal = mealBuilder.prepareChickenMeal();
+        System.out.println("Non Veg Meal Details");
+        nonVegMeal.showItems();
+        System.out.println("Total cost is : "+nonVegMeal.getPrice());
     }
 }
