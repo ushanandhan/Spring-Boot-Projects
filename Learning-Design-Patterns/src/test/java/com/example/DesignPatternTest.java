@@ -3,6 +3,7 @@ package com.example;
 import com.example.creational.builder.Meal;
 import com.example.creational.builder.MealBuilder;
 import com.example.creational.factory.*;
+import com.example.creational.prototype.ShapeCache;
 import com.example.creational.singleton.SingletonObject;
 import org.junit.jupiter.api.Test;
 
@@ -52,5 +53,15 @@ public class DesignPatternTest {
         System.out.println("Non Veg Meal Details");
         nonVegMeal.showItems();
         System.out.println("Total cost is : "+nonVegMeal.getPrice());
+    }
+
+    @Test
+    public void prototypePatternTest() throws CloneNotSupportedException {
+        ShapeCache.loadCache();
+        com.example.creational.prototype.Shape clonedShape = (com.example.creational.prototype.Shape) ShapeCache.getShape("1");
+        System.out.println("Shape : "+clonedShape.getType());
+
+        com.example.creational.prototype.Shape clonedShape1 = (com.example.creational.prototype.Shape) ShapeCache.getShape("2");
+        System.out.println("Shape : "+clonedShape1.getType());
     }
 }
