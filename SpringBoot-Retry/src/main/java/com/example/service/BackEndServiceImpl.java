@@ -3,7 +3,6 @@ package com.example.service;
 import com.example.exception.RemoteServiceNotAvailableException;
 import org.springframework.stereotype.Service;
 
-import java.rmi.RemoteException;
 import java.util.Random;
 
 @Service
@@ -27,7 +26,7 @@ public class BackEndServiceImpl implements BackEndService{
     }
 
     @Override
-    public String getBackendResponseFallback(RuntimeException e) {
+    public String getBackendResponseFallback(RemoteServiceNotAvailableException e) {
         System.out.println("All retries completed, so Fallback method called!!!");
         return "All retries completed, so Fallback method called!!!";
     }
