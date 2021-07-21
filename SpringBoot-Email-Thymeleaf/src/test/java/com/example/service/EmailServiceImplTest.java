@@ -78,6 +78,8 @@ class EmailServiceImplTest {
         templateModel.put("taskDueDate","30-03-2021");
         templateModel.put("taskStatus","In-Progress");
         templateModel.put("cars",cars);
+        templateModel.put("url","http://localhost:8080");
+        templateModel.put("token",1234);
         emailService.send(toAddresses,ccAddresses,"Testing-Email-Using-Thymeleaf","test-email-3.html",templateModel);
     }
 }
