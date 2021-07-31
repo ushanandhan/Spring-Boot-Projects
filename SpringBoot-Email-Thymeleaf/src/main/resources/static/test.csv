@@ -1,4 +1,5 @@
-id;name;age
-1;ushan;33
-2;kienl;32
-3;viala;29
+id,name,type
+1001,duster,hybrid
+1002,micra,hatchback
+1003,lodgy,suv
+1004,kicks,suv

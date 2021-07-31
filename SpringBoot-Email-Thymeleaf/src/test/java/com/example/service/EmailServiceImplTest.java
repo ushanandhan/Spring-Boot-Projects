@@ -12,6 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +37,8 @@ class EmailServiceImplTest {
         Map<String,Object> templateModel = new HashMap<>();
         templateModel.put("username","Ushan");
         templateModel.put("link","www.google.co.in");
-        String fileName = "src\\main\\resources\\static\\test.csv";
+        String fileName = "src//main//resources//static//test.csv";    // For Linux
+//        String fileName = "src\\main\\resources\\static\\test.csv";  // For Windows
         emailService.send("ushan@email.com","test-email-2.html",templateModel,fileName);
 
     }
