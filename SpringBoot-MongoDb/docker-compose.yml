@@ -6,7 +6,7 @@ services:
     ports:
     - 27017:27017
   springboot-mongodb:
-    build: ./
+    build: .
     image: springboot-mongodb:latest
     container_name: springboot-mongodb
     ports:
