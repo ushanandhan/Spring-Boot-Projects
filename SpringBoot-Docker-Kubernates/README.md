@@ -2,7 +2,7 @@
 
 # Deploying Spring Boot Application With Docker and Minikube on Windows
 
-## 1. Prerequisites:
+## Prerequisites:
 1) Spring Boot Application
 2) Docker should be installed.
 3) Minikube should be installed.
