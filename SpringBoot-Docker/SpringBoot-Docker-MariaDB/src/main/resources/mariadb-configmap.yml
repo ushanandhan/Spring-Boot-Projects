@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: db-conf
 data:
-  host: springBoot-mariadb
+  host: springboot-mariadb
   name: app_db
