@@ -57,13 +57,13 @@ spec:
                 key: password     
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /health/ready
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /health/live
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 5
