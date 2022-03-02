@@ -7,8 +7,8 @@ metadata:
 spec:
   ports:
     - nodePort: 30163
-      port: 8080
-      targetPort: 8080
+      port: 6060
+      targetPort: 6060
       protocol: TCP
   selector:
     app: springboot-k8s-mariadb
@@ -23,7 +23,7 @@ spec:
   selector:
     matchLabels:
       app: springboot-k8s-mariadb
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: springboot-k8s-mariadb
-          image: springboot-k8s-mariadb:1.0
+          image: ariyaushan/springboot-k8s-mariadb:1.0
           ports:
             - containerPort: 8080
           env:   # Setting Enviornmental Variables
